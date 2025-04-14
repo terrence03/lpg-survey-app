@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  lpg-survey-app:
+    build: .
+    ports:
+      - "8538:8538"
+    volumes:
+      - ./.streamlit:/lpg-survey-app/.streamlit
+      - ./res:/lpg-survey-app/res
+      - ./app.py:/lpg-survey-app/app.py
+    environment:
+      - TZ=Asia/Taipei
+      - PYTHONPATH=/lpg-survey-app
+    working_dir: /lpg-survey-app
+    entrypoint: [ "streamlit", "run", "app.py", "--server.port=8538", "--server.address=0.0.0.0" ]
