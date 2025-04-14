@@ -313,11 +313,10 @@ def get_response() -> dict:
 
 
 # Submit
-submit = st.button("送出")
+submit = st.button("送出", type="primary")
 if submit:
     if check_respone():
         append_values([get_response()])
-        # go to thank you page
         st.switch_page("pages/complate.py")
     else:
         st.error("請檢查是否所有問題都已回答")
