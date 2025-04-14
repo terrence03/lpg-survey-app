@@ -53,10 +53,3 @@ def append_values(values):
     except HttpError as error:
         print(f"An error occurred: {error}")
         return error
-
-# if __name__ == "__main__":
-#     # 測試 append_values 函數
-#     test_values = [
-#         [1, 2, 3, 4, 5, 6, None, 8, 9, 10, 11, 12, 13, 14, 15, 16]  # 測試數據
-#     ]
-#     append_values(test_values)

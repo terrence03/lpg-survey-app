@@ -2,7 +2,10 @@ import streamlit as st
 import tomllib
 from src.storage import append_values
 
-response = {}
+st.title("液化石油氣定型化契約使用調查")
+# Video
+st.subheader("請觀看以下影片後進行作答")
+st.video("https://youtu.be/_XMCZQGLyeI?si=DsMJHn5c8EONqZBd")
 
 
 @st.cache_resource
@@ -15,13 +18,8 @@ def read_questions():
         return tomllib.load(f)
 
 
+response = {}
 questions = read_questions()
-
-st.title("LPG Survey Form")
-
-# Video
-st.subheader("請觀看以下影片後進行作答")
-st.video("https://youtu.be/_XMCZQGLyeI?si=DsMJHn5c8EONqZBd")
 
 
 def check_answer(question, answer) -> bool:
@@ -319,6 +317,7 @@ submit = st.button("送出")
 if submit:
     if check_respone():
         append_values([get_response()])
-        st.success("感謝您的填寫！")
+        # go to thank you page
+        st.switch_page("pages/complate.py")
     else:
-        st.error("請檢查是否所有問題都已回答！")
+        st.error("請檢查是否所有問題都已回答")
