@@ -1,5 +1,4 @@
 # %%
-import os
 import streamlit as st
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -41,7 +40,7 @@ def append_values(values):
             .values()
             .append(
                 spreadsheetId=st.secrets["spreadsheet"]["spreadsheet_id"],
-                range="A1:P1",
+                range="A1:Q1",
                 valueInputOption="USER_ENTERED",
                 body=body,
             )

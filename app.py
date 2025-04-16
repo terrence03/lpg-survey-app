@@ -1,11 +1,16 @@
+from datetime import datetime, timedelta, timezone
 import streamlit as st
 import tomllib
 from src.storage import append_values
 
-st.title("液化石油氣定型化契約使用調查")
+st.title("「家用液化石油氣供氣定型化契約」問卷")
+st.info(
+    "感謝您參與本次宣導活動，**請先觀看影片再填寫本問卷**，完成後即可獲取精美小禮物。"
+)
+
 # Video
 st.subheader("請觀看以下影片後進行作答")
-st.video("https://youtu.be/_XMCZQGLyeI?si=DsMJHn5c8EONqZBd")
+st.video("https://youtu.be/WV2S75hqnMc")
 
 
 @st.cache_resource
@@ -82,34 +87,6 @@ with st.container(key="q3", border=True):
         check_answer("q3", q3)
         response["q3"] = q3
 
-# Q4
-with st.container(key="q4", border=True):
-    st.subheader(questions["q4"]["question"])
-    q4 = st.radio(
-        f"{questions['q4']['question']}",
-        options=questions["q4"]["options"],
-        index=None,
-        format_func=lambda x: questions["q4"]["options"][x],
-        label_visibility="collapsed",
-    )
-    if q4:
-        check_answer("q4", q4)
-        response["q4"] = q4
-
-# Q5
-with st.container(key="q5", border=True):
-    st.subheader(questions["q5"]["question"])
-    q5 = st.radio(
-        f"{questions['q5']['question']}",
-        options=questions["q5"]["options"],
-        index=None,
-        format_func=lambda x: questions["q5"]["options"][x],
-        label_visibility="collapsed",
-    )
-    if q5:
-        check_answer("q5", q5)
-        response["q5"] = q5
-
 # gender
 with st.container(key="gender", border=True):
     st.subheader(questions["gender"]["question"])
@@ -138,6 +115,20 @@ with st.container(key="age", border=True):
     if age:
         response["age"] = age
 
+# education
+with st.container(key="education", border=True):
+    st.subheader(questions["education"]["question"])
+    education = st.radio(
+        f"{questions['education']['question']}",
+        options=questions["education"]["options"],
+        index=None,
+        horizontal=True,
+        format_func=lambda x: questions["education"]["options"][x],
+        label_visibility="collapsed",
+    )
+    if education:
+        response["education"] = education
+
 # lpg usage
 with st.container(key="lpg_usage", border=True):
     st.subheader(questions["lpg_usage"]["question"])
@@ -153,74 +144,51 @@ with st.container(key="lpg_usage", border=True):
         response["lpg_usage"] = lpg_usage
 
     if lpg_usage == "1":
-        # lpg_usage_person
-        st.subheader(questions["lpg_usage_person"]["question"])
-        lpg_usage_person = st.radio(
-            f"{questions['lpg_usage_person']['question']}",
-            options=questions["lpg_usage_person"]["options"],
+        st.subheader(questions["lpg_usage_yes"]["question"])
+        lpg_usage_yes = st.radio(
+            f"{questions['lpg_usage_yes']['question']}",
+            options=questions["lpg_usage_yes"]["options"],
             index=None,
             horizontal=True,
-            format_func=lambda x: questions["lpg_usage_person"]["options"][x],
+            format_func=lambda x: questions["lpg_usage_yes"]["options"][x],
             label_visibility="collapsed",
         )
-        if lpg_usage_person:
-            response["lpg_usage_person"] = lpg_usage_person
+        if lpg_usage_yes:
+            response["lpg_usage_yes"] = lpg_usage_yes
 
-        if lpg_usage_person == "2":
-            # lpg_usage_person_other_gender
-            st.subheader(questions["lpg_usage_person_other_gender"]["question"])
-            lpg_usage_person_other_gender = st.radio(
-                f"{questions['lpg_usage_person_other_gender']['question']}",
-                options=questions["lpg_usage_person_other_gender"]["options"],
-                index=None,
-                horizontal=True,
-                format_func=lambda x: questions["lpg_usage_person_other_gender"][
-                    "options"
-                ][x],
-                label_visibility="collapsed",
-            )
-            if lpg_usage_person_other_gender:
-                response["lpg_usage_person_other_gender"] = (
-                    lpg_usage_person_other_gender
-                )
-
-            # lpg_usage_person_other_age
-            st.subheader(questions["lpg_usage_person_other_age"]["question"])
-            lpg_usage_person_other_age = st.radio(
-                f"{questions['lpg_usage_person_other_age']['question']}",
-                options=questions["lpg_usage_person_other_age"]["options"],
-                index=None,
-                horizontal=True,
-                format_func=lambda x: questions["lpg_usage_person_other_age"][
-                    "options"
-                ][x],
-                label_visibility="collapsed",
-            )
-            if lpg_usage_person_other_age:
-                response["lpg_usage_person_other_age"] = lpg_usage_person_other_age
-
-    if lpg_usage == "2":
-        # household_energy
-        st.subheader(questions["household_energy"]["question"])
-        household_energy = st.radio(
-            f"{questions['household_energy']['question']}",
-            options=questions["household_energy"]["options"],
+        # with st.container(key="contract", border=True):
+        st.subheader(questions["contract"]["question"])
+        contract = st.radio(
+            f"{questions['contract']['question']}",
+            options=questions["contract"]["options"],
             index=None,
             horizontal=True,
-            format_func=lambda x: questions["household_energy"]["options"][x],
+            format_func=lambda x: questions["contract"]["options"][x],
             label_visibility="collapsed",
         )
-        if household_energy:
-            response["household_energy"] = household_energy
+        if contract:
+            response["contract"] = contract
 
-        if household_energy == "3":
-            # household_energy_other
-            household_energy_other = st.text_input(
-                f"{questions['household_energy']['question']}",
-                placeholder="請輸入其他能源",
+        if contract == "2":
+            st.subheader(questions["contract_no"]["question"])
+            contract_no = st.radio(
+                f"{questions['contract_no']['question']}",
+                options=questions["contract_no"]["options"],
+                index=None,
+                format_func=lambda x: questions["contract_no"]["options"][x],
+                label_visibility="collapsed",
             )
-            if household_energy_other:
-                response["household_energy_other"] = household_energy_other
+            if contract_no:
+                response["contract_no"] = contract_no
+
+                if contract_no == "5":
+                    # contract_no_other
+                    contract_no_other = st.text_input(
+                        f"{questions['contract_no']['question']}",
+                        placeholder="請輸入",
+                    )
+                    if contract_no_other:
+                        response["contract_no_other"] = contract_no_other
 
 # contract_willing
 with st.container(key="contract_willing", border=True):
@@ -239,84 +207,139 @@ with st.container(key="contract_willing", border=True):
     if contract_willing == "2":
         # contract_willing_no
         st.subheader(questions["contract_willing_no"]["question"])
-        contract_willing_no_reason = st.radio(
+        contract_willing_no = st.radio(
             f"{questions['contract_willing_no']['question']}",
             options=questions["contract_willing_no"]["options"],
             index=None,
             format_func=lambda x: questions["contract_willing_no"]["options"][x],
             label_visibility="collapsed",
         )
-        if contract_willing_no_reason:
-            response["contract_willing_no_reason"] = contract_willing_no_reason
+        if contract_willing_no:
+            response["contract_willing_no"] = contract_willing_no
 
-        if contract_willing_no_reason == "4":
+        if contract_willing_no == "4":
             # contract_willing_no_other
-            contract_willing_no_reason_other = st.text_input(
+            contract_willing_no_other = st.text_input(
                 f"{questions['contract_willing_no']['question']}",
-                placeholder="請輸入其他原因",
+                placeholder="請輸入",
             )
-            if contract_willing_no_reason_other:
-                response["contract_willing_no_reason_other"] = (
-                    contract_willing_no_reason_other
-                )
+            if contract_willing_no_other:
+                response["contract_willing_no_other"] = contract_willing_no_other
+
+# attraction
+with st.container(key="attraction", border=True):
+    st.subheader(questions["attraction"]["question"])
+    attraction = []
+    for o in questions["attraction"]["options"]:
+        _ = st.checkbox(
+            f"{questions['attraction']['options'][o]}",
+            value=False,
+            key=o,
+        )
+        if _:
+            attraction.append(o)
+    if len(attraction) > 0:
+        response["attraction"] = attraction
+
+    if "7" in attraction:
+        # attraction_other
+        attraction_other = st.text_input(
+            f"{questions['attraction']['question']}",
+            placeholder="請輸入",
+        )
+        if attraction_other:
+            response["attraction_other"] = attraction_other
 
 
 # 檢查問題是否都回答
 def check_respone():
-    def rule1() -> bool:
-        return all([q1, q2, q3, q4, q5])
+    def rule1():
+        return all(
+            [
+                response.get("q1"),
+                response.get("q2"),
+                response.get("q3"),
+                response.get("gender"),
+                response.get("age"),
+                response.get("education"),
+                response.get("lpg_usage"),
+                response.get("contract_willing"),
+                response.get("attraction"),
+            ]
+        )
 
-    def rule2() -> bool:
-        return all([gender, age])
+    def rule2():
+        if response.get("lpg_usage") == "2":
+            return True
 
-    def rule3() -> bool:
-        if lpg_usage == "1":
-            if lpg_usage_person == "1":
-                return all([lpg_usage, lpg_usage_person])
-            elif lpg_usage_person == "2":
-                return all([lpg_usage_person_other_gender, lpg_usage_person_other_age])
-            return False
-        elif lpg_usage == "2":
-            return all([lpg_usage, household_energy])
+        if response.get("lpg_usage_yes"):
+            if response.get("contract") == "1":
+                return True
+            return all(
+                [
+                    response.get("contract"),
+                    response.get("contract_no"),
+                ]
+            )
         return False
 
-    def rule4() -> bool:
-        if contract_willing == "1":
-            return True
-        elif contract_willing == "2":
-            if contract_willing_no_reason:
+    def rule3():
+        if response.get("contract_willing") == "2":
+            if response.get("contract_willing_no"):
                 return True
             return False
-        return False
+        return True
 
-    return all([rule1(), rule2(), rule3(), rule4()])
+    return all([rule1(), rule2(), rule3()])
 
 
-def get_response() -> dict:
-    questions = [
+def get_timestamp() -> str:
+    # Get the current time in UTC+8
+    utc_now = datetime.now(timezone.utc)
+    taipei_now = utc_now.astimezone(timezone(timedelta(hours=8)))
+    return taipei_now.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def format_response(_response: dict, to_list: bool = False) -> dict | list:
+    for k, v in _response.items():
+        if isinstance(v, list):
+            _response[k] = "/".join(questions[k]["options"][x] for x in v)
+        elif v.isdigit():
+            _response[k] = questions[k]["options"][v]
+        else:
+            _response[k] = v
+    cols = [
+        "timestamp",
         "q1",
         "q2",
         "q3",
-        "q4",
-        "q5",
+        "gender",
+        "age",
+        "education",
         "lpg_usage",
-        "lpg_usage_person",
-        "lpg_uasge_person_other_gender",
-        "lpg_usage_person_other_age",
-        "household_energy",
-        "household_energy_other",
+        "lpg_usage_yes",
+        "contract",
+        "contract_no",
+        "contract_no_other",
         "contract_willing",
-        "contract_willing_no_reason",
-        "contract_willing_no_reason_other",
+        "contract_willing_no",
+        "contract_willing_no_other",
+        "attraction",
+        "attraction_other",
     ]
-    return [response.get(x) for x in questions]
+    _response["timestamp"] = get_timestamp()
+
+    if to_list:
+        return [_response.get(col) for col in cols]
+    return {col: _response.get(col) for col in cols}
 
 
 # Submit
 submit = st.button("送出", type="primary")
 if submit:
     if check_respone():
-        append_values([get_response()])
+        append_values([format_response(response, True)])
         st.switch_page("pages/complate.py")
+
     else:
         st.error("請檢查是否所有問題都已回答")
