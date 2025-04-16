@@ -7,7 +7,9 @@ services:
       - "8538:8538"
     volumes:
       - ./.streamlit:/lpg-survey-app/.streamlit
+      - ./src:/lpg-survey-app/src
       - ./res:/lpg-survey-app/res
+      - ./pages:/lpg-survey-app/pages
       - ./app.py:/lpg-survey-app/app.py
     environment:
       - TZ=Asia/Taipei
