@@ -1,5 +1,5 @@
 [q1]
-no = "1-1"
+no = "Q1"
 question = "影片中提到的契約保障，包括下列何者？"
 answer = "4"
 [q1.options]
@@ -9,7 +9,7 @@ answer = "4"
 4 = "D. 以上皆是"
 
 [q2]
-no = "1-2"
+no = "Q2"
 question = "瓦斯行應明確說明額外的收費項目，包括以下何者?"
 answer = "4"
 [q2.options]
@@ -19,7 +19,7 @@ answer = "4"
 4 = "D. 以上皆是"
 
 [q3]
-no = "1-3"
+no = "Q3"
 question = "供氣定型化契約還可以另外保障哪些權益?"
 answer = "4"
 [q3.options]
@@ -29,14 +29,14 @@ answer = "4"
 4 = "D. 以上皆是"
 
 [gender]
-no = "2-1"
+no = "1"
 question = "請問您的性別？"
 [gender.options]
 1 = "男"
 2 = "女"
 
 [age]
-no = "2-2"
+no = "2"
 question = "請問您的年齡？"
 [age.options]
 1 = "19歲以下"
@@ -47,7 +47,7 @@ question = "請問您的年齡？"
 6 = "60歲以上"
 
 [education]
-no = "2-3"
+no = "3"
 question = "請問您的教育程度？"
 [education.options]
 1 = "國中(含)以下"
@@ -56,21 +56,22 @@ question = "請問您的教育程度？"
 4 = "研究所(含)以上"
 
 [lpg_usage]
-no = "2-4"
+no = "4"
 question = "家中是否使用桶裝瓦斯？"
 [lpg_usage.options]
 1 = "有"
 2 = "無"
 
 [lpg_usage_yes]
-no = "2-4-1"
-question = "一年使用幾桶？"
+no = "4.1"
+question = "多久叫一次瓦斯？"
 [lpg_usage_yes.options]
-1 = "1桶以下"
-2 = "1-2桶"
-3 = "2-3桶"
-4 = "6桶"
-5 = "12桶"
+1 = "1個月"
+2 = "2個月"
+3 = "3-4個月"
+4 = "5-6個月"
+5 = "7-12個月"
+6 = "1年以上"
 
 [contract]
 no = "2-5"
