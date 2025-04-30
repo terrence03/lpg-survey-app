@@ -74,14 +74,14 @@ question = "多久叫一次瓦斯？"
 6 = "1年以上"
 
 [contract]
-no = "2-5"
+no = "5"
 question = "您家中是否已與瓦斯行簽訂定型化契約？"
 [contract.options]
 1 = "是"
 2 = "否"
 
 [contract_no]
-no = "2-5-1"
+no = "5.1"
 question = "沒有簽的原因？"
 [contract_no.options]
 1 = "不知道可以簽約"
@@ -91,15 +91,15 @@ question = "沒有簽的原因？"
 5 = "其他"
 
 [contract_willing]
-no = "2-6"
-question = "看完影片後，您是否願意簽約?"
+no = "6"
+question = "看完影片後，您是否有意願簽約?"
 [contract_willing.options]
-1 = "願意"
-2 = "不願意"
+1 = "有意願"
+2 = "無意願"
 
 [contract_willing_no]
-no = "2-6-1"
-question = "不願意與瓦斯行簽訂契約的原因？"
+no = "6.1"
+question = "無意願的原因？"
 [contract_willing_no.options]
 1 = "合作多年覺得沒必要"
 2 = "契約內容太複雜"
@@ -107,7 +107,7 @@ question = "不願意與瓦斯行簽訂契約的原因？"
 4 = "其他"
 
 [attraction]
-no = "2-7"
+no = "7"
 question = "契約中哪一項保障最吸引您簽約？(複選)"
 [attraction.options]
 1 = "殘氣退費"
