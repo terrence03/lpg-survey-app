@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-st.success("感謝您參與本次「家用液化石油氣供氣定型化契約」宣導活動", icon="✅")
+st.success("您已完成問卷，感謝您的參與！", icon="✅")
 
 
 if st.button("返回首頁"):

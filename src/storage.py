@@ -1,4 +1,6 @@
 # %%
+import uuid
+from datetime import datetime, timedelta, timezone
 import streamlit as st
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -8,6 +10,19 @@ from googleapiclient.errors import HttpError
 SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
 ]
+
+
+def get_sid() -> str:
+    if "sid" not in st.session_state:
+        st.session_state.sid = str(uuid.uuid4())
+    return st.session_state.sid
+
+
+def get_timestamp() -> str:
+    # Get the current time in UTC+8
+    utc_now = datetime.now(timezone.utc)
+    taipei_now = utc_now.astimezone(timezone(timedelta(hours=8)))
+    return taipei_now.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def get_service_account_credentials() -> service_account.Credentials:
@@ -23,7 +38,7 @@ def get_service_account_credentials() -> service_account.Credentials:
     return credentials
 
 
-def append_values(values):
+def append_check_in(values):
     """
     Creates the batch_update the user has access to.
     Load pre-authorized user credentials from the environment.
@@ -39,8 +54,39 @@ def append_values(values):
             service.spreadsheets()
             .values()
             .append(
-                spreadsheetId=st.secrets["spreadsheet"]["spreadsheet_id"],
-                range="A1:Q1",
+                spreadsheetId=st.secrets["spreadsheet"]["check_in"],
+                range="A1:B1",
+                valueInputOption="USER_ENTERED",
+                body=body,
+            )
+            .execute()
+        )
+        print(f"{(result.get('updates').get('updatedCells'))} cells appended.")
+        return result
+
+    except HttpError as error:
+        print(f"An error occurred: {error}")
+        return error
+
+
+def append_response(values):
+    """
+    Creates the batch_update the user has access to.
+    Load pre-authorized user credentials from the environment.
+    TODO(developer) - See https://developers.google.com/identity
+    for guides on implementing OAuth2 for the application.
+    """
+    creds = get_service_account_credentials()
+    # pylint: disable=maybe-no-member
+    try:
+        service = build("sheets", "v4", credentials=creds)
+        body = {"values": values}
+        result = (
+            service.spreadsheets()
+            .values()
+            .append(
+                spreadsheetId=st.secrets["spreadsheet"]["response"],
+                range="A1:R1",
                 valueInputOption="USER_ENTERED",
                 body=body,
             )
