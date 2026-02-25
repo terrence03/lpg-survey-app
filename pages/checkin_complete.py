@@ -15,10 +15,7 @@ sid = st.session_state.sid
 
 append_check_in([[timestamp, sid]])
 
-st.image("res/poster.png")
+st.image("res/checkin_complete.png")
 
-if st.button("繼續活動"):
-    st.switch_page("pages/survey.py")
-
-if st.button("結束活動"):
-    st.switch_page("pages/over.py")
+if st.button("返回首頁"):
+    st.switch_page("app.py")
