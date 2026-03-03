@@ -1,6 +1,14 @@
 import streamlit as st
 import tomllib
-from src.storage import append_response, get_timestamp, get_sid
+from src.storage import append_survey_response, get_timestamp
+
+if st.session_state.survey_done:
+    st.warning("您已完成問卷，請勿重複提交")
+    with st.spinner("Loading..."):
+        if st.button("返回首頁"):
+            st.session_state.clear()  # Clear session state on page load
+            st.switch_page("app.py")
+    st.stop()
 
 st.title("「家用液化石油氣供氣定型化契約」問卷")
 st.info(
@@ -306,7 +314,9 @@ with st.container(key="policy_info", border=True):
                         placeholder="請輸入",
                     )
                     if policy_info_network_other:
-                        response["policy_info_network_other"] = policy_info_network_other
+                        response["policy_info_network_other"] = (
+                            policy_info_network_other
+                        )
 
             if "8" in policy_info:
                 # policy_info_advertising
@@ -439,7 +449,7 @@ def format_response(_response: dict, to_list: bool = False) -> dict | list:
         "policy_info_other",
     ]
     _response["timestamp"] = get_timestamp()
-    _response["sid"] = get_sid()
+    _response["sid"] = st.session_state.sid
 
     if to_list:
         return [_response.get(col) for col in cols]
@@ -447,11 +457,15 @@ def format_response(_response: dict, to_list: bool = False) -> dict | list:
 
 
 # Submit
-submit = st.button("完成", type="primary")
-if submit:
-    if check_respone():
-        append_response([format_response(response, True)])
-        st.switch_page("pages/survey_complete.py")
+survey_done = st.session_state.survey_done
+submit = st.button("送出", type="primary", disabled=survey_done)
 
-    else:
-        st.error("請檢查是否所有問題都已回答")
+with st.spinner("Loading..."):
+    if submit:
+        if check_respone():
+            st.session_state.survey_done = True
+            append_survey_response([format_response(response, True)])
+            st.switch_page("pages/survey_complete.py")
+
+        else:
+            st.error("請檢查是否所有問題都已回答")

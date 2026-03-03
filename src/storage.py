@@ -11,13 +11,6 @@ SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
 ]
 
-
-def get_sid() -> str:
-    if "sid" not in st.session_state:
-        st.session_state.sid = str(uuid.uuid4())
-    return st.session_state.sid
-
-
 def get_timestamp() -> str:
     # Get the current time in UTC+8
     utc_now = datetime.now(timezone.utc)
@@ -38,7 +31,7 @@ def get_service_account_credentials() -> service_account.Credentials:
     return credentials
 
 
-def append_check_in(values):
+def append_checkin_record(values):
     """
     Creates the batch_update the user has access to.
     Load pre-authorized user credentials from the environment.
@@ -69,7 +62,7 @@ def append_check_in(values):
         return error
 
 
-def append_response(values):
+def append_survey_response(values):
     """
     Creates the batch_update the user has access to.
     Load pre-authorized user credentials from the environment.
