@@ -64,7 +64,7 @@ question = "您家中是否已與瓦斯行簽訂定型化契約？"
 
 [contract_no]
 no = "4.1"
-question = "沒有簽的原因？"
+question = "沒有簽的原因？（可複選）"
 other_question = "沒有簽的原因？"
 [contract_no.options]
 1 = "不知道可以簽約"
@@ -85,8 +85,8 @@ question = "看完影片後，您是否瞭解定型化契約的主要內容？"
 
 [contract_aware_no]
 no = "5.1"
-question = "您覺得對影片不太瞭解的部分主要是？(可複選)"
-other_question = "您覺得對影片不太瞭解的部分主要是？"
+question = "您不瞭解的部分主要是？(可複選)"
+other_question = "您不瞭解的部分主要是？"
 [contract_aware_no.options]
 1 = "額外收費項目說明"
 2 = "依比例退還未使用完的瓦斯氣價"
@@ -101,7 +101,7 @@ question = "看完影片後，您是否有意願與瓦斯行簽約？"
 
 [contract_willing_no]
 no = "6.1"
-question = "無意願的原因？"
+question = "無意願的原因？(可複選)"
 other_question = "無意願的原因？"
 [contract_willing_no.options]
 1 = "合作多年沒必要"
@@ -112,8 +112,8 @@ other_question = "無意願的原因？"
 
 [policy_info]
 no = "7"
-question = "請問您通常從何種管道接收政府政令等相關資訊?(可複選)"
-other_question = "請問您通常從何種管道接收政府政令等相關資訊?"
+question = "請問您通常從哪些管道接收政府宣導資訊？(可複選)"
+other_question = "請問您通常從哪些管道接收政府宣導資訊？"
 [policy_info.options]
 1 = "地方或特色活動攤位"
 2 = "社區集會、講座"
