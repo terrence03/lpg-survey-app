@@ -2,9 +2,9 @@ import streamlit as st
 
 st.header("購買瓦斯簽契約，消費權益有保障")
 
-st.success(
-    "問卷完成！感謝您參與本次「家用液化石油氣供氣定型化契約」宣導活動", icon="✅"
-)
+# st.success(
+#     "問卷完成！感謝您參與本次「家用液化石油氣供氣定型化契約」宣導活動", icon="✅"
+# )
 
 st.image("res/survey_complete.png")
 
