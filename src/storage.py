@@ -1,10 +1,36 @@
 # %%
-import uuid
+import csv
+import os
 from datetime import datetime, timedelta, timezone
 import streamlit as st
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
+OUTPUT_DIR = "output"
+CHECKIN_CSV = os.path.join(OUTPUT_DIR, "checkin.csv")
+SURVEY_CSV = os.path.join(OUTPUT_DIR, "survey.csv")
+
+CHECKIN_HEADERS = ["timestamp", "sid"]
+SURVEY_HEADERS = [
+    "timestamp", "sid", "q1", "q2", "q3", "gender", "age",
+    "lpg_usage", "contract", "contract_no", "contract_no_other",
+    "contract_aware", "contract_aware_no", "contract_aware_no_other",
+    "contract_willing", "contract_willing_no", "contract_willing_no_other",
+    "policy_info", "policy_info_network", "policy_info_network_other",
+    "policy_info_advertising", "policy_info_advertising_other", "policy_info_other",
+]
+
+
+def _write_to_csv(filepath: str, headers: list, rows: list):
+    """Append rows to a local CSV file, writing headers if the file is new."""
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    write_header = not os.path.exists(filepath)
+    with open(filepath, "a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        if write_header:
+            writer.writerow(headers)
+        writer.writerows(rows)
 
 # 設定 API 權限範圍
 SCOPES = [
@@ -59,6 +85,8 @@ def append_checkin_record(values):
 
     except HttpError as error:
         print(f"An error occurred: {error}")
+        print("Falling back to local CSV storage for checkin record.")
+        _write_to_csv(CHECKIN_CSV, CHECKIN_HEADERS, values)
         return error
 
 
@@ -90,4 +118,6 @@ def append_survey_response(values):
 
     except HttpError as error:
         print(f"An error occurred: {error}")
+        print("Falling back to local CSV storage for survey response.")
+        _write_to_csv(SURVEY_CSV, SURVEY_HEADERS, values)
         return error
