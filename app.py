@@ -24,16 +24,21 @@ if st.session_state.survey_button_clicked:
 
 st.header("家用液化石油氣供氣定型化契約宣導活動")
 
-st.subheader("參加活動拿好禮")
+# st.subheader("參加活動拿好禮")
 
 # mascot
 st.image("res/mascot.png")
 
-with st.container():
-    st.badge("完成打卡獲得小禮物乙份")
-    st.badge("完成活動問卷獲得精美實用禮乙份")
-    st.badge("宣導品數量有限，送完為止!")
+# with st.container():
+#     st.badge("完成打卡獲得小禮物乙份")
+#     st.badge("完成活動問卷獲得精美實用禮乙份")
+#     st.badge("宣導品數量有限，送完為止!")
 
+st.info(
+    "+ 完成打卡即可獲得小禮物乙份\n"
+    "+ 完成活動問卷即可獲得精美實用禮乙份\n"
+    "+ 宣導品數量有限，送完為止!"
+)
 
 layout = st.columns(2)
 
@@ -50,7 +55,7 @@ with st.spinner("Loading..."):
         st.session_state.survey_button_clicked = True
         timestamp = get_timestamp()
         sid = st.session_state.sid
-        append_checkin_record([[timestamp, sid]])
+        # append_checkin_record([[timestamp, sid]])
         st.rerun()
 
     if layout[1].button("僅打卡", width="stretch", disabled=disabled):

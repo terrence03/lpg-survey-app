@@ -23,7 +23,8 @@
 				"ms-python.python",
 				"firefox-devtools.vscode-firefox-debug",
 				"charliermarsh.ruff",
-				"tamasfe.even-better-toml"
+				"tamasfe.even-better-toml",
+				"ritwickdey.LiveServer"
 			]
 		}
 	},

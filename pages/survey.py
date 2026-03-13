@@ -1,6 +1,16 @@
+import uuid
 import streamlit as st
 import tomllib
 from src.storage import append_survey_response, get_timestamp
+
+# Redirect to home if session was lost (e.g. page refresh)
+if "check_in_done" not in st.session_state or not st.session_state.check_in_done:
+    st.switch_page("app.py")
+
+if "sid" not in st.session_state:
+    st.session_state.sid = str(uuid.uuid4())
+if "survey_done" not in st.session_state:
+    st.session_state.survey_done = False
 
 if st.session_state.survey_done:
     st.warning("您已完成問卷，請勿重複提交")
